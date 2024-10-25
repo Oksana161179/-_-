@@ -2,10 +2,11 @@ import requests
 import json
 from tkinter import *
 from tkinter import messagebox as mb
+from tkinter import ttk
 
 
 def exchange():#создаем функцию обмена
-    code = entry.get()#переменная-code получает-get информацию из поля ввода-entry, которую туда ввели
+    code = combobox.get()#переменная-code получает-get информацию из combobox, которую туда ввели
 
     if code:#делаем проверку, если поле ввода заполнено
         try:#делаем обработку исключений
@@ -28,10 +29,14 @@ window = Tk()#создаем окно
 window.title("Курсы обмена валют")#задаем заголовок окну
 window.geometry("360x180")#задаем размер окну
 
-Label(text="Введите код валюты").pack(padx=10, pady=10)#создаем метку с отступами по ширине и по высоте
+Label(text="Выберите код валюты").pack(padx=10, pady=10)#создаем метку с отступами по ширине и по высоте
+cur = ['RUB', 'EUR', 'GBP', 'JPY', 'CNY', 'KZT', 'UZS', 'CHF', 'AED', 'CAD']
 
-entry = Entry()#создаем поле ввода, по умолчанию создаем в окне window
-entry.pack(padx=10, pady=10)
+combobox = ttk.Combobox(values=cur)#создаем комбобокс для выбора пользователем валюты со значением(values)=cur-список валют
+combobox.pack(padx=10, pady=10)
+
+#entry = Entry()#создаем поле ввода, по умолчанию создаем в окне window
+#entry.pack(padx=10, pady=10)
 
 Button(text="Получить курс обмена к доллару", command=exchange).pack(padx=10, pady=10)
 #создаем кнопку с командой обмен-exchange с параметрами
