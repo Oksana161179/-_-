@@ -4,10 +4,17 @@ from tkinter import *
 from tkinter import messagebox as mb
 from tkinter import ttk
 
-def update_c_label(event):#создаем функцию обновления(update) метки-c_label, выводящей название валют с событием-event
+def update_b_label(event):#создаем функцию обновления(update) метки-c_label, выводящей название валют с событием-event
+    code = b_combobox.get()#код(code) мы получим из combobox.get
+    name = cur[code]#а имя(нормальное имя, длинное) валюты будем брать из списка-cur соответствующее значению
+    b_label.config(text=name)#будем обновлять текст на этой метке и туда будем отправлять-name,
+    # т.е. нормальное название валюты
+
+
+def update_t_label(event):#создаем функцию обновления(update) метки-c_label, выводящей название валют с событием-event
     code = t_combobox.get()#код(code) мы получим из combobox.get
     name = cur[code]#а имя(нормальное имя, длинное) валюты будем брать из списка-cur соответствующее значению
-    c_label.config(text=name)#будем обновлять текст на этой метке и туда будем отправлять-name,
+    t_label.config(text=name)#будем обновлять текст на этой метке и туда будем отправлять-name,
     # т.е. нормальное название валюты
 
 
@@ -57,7 +64,10 @@ Label(text="Базовая валюта").pack(padx=10, pady=10)#создаем 
 b_combobox = ttk.Combobox(values=list(cur.keys()))#создаем комбобокс для выбора пользователем валюты со значением(values)=cur-словарю валют,
 # переведенному в список-list с ключами-keys
 b_combobox.pack(padx=10, pady=10)
+b_combobox.bind("<<ComboboxSelected>>", update_b_label)#каждый раз обновляем метку с названием валюты
 
+b_label = ttk.Label()#создаем метку для вывода названия валют полностью
+b_label.pack(padx=10, pady=10)
 
 
 Label(text="Целевая валюта").pack(padx=10, pady=10)#создаем метку с отступами по ширине и по высоте
@@ -66,10 +76,10 @@ Label(text="Целевая валюта").pack(padx=10, pady=10)#создаем 
 t_combobox = ttk.Combobox(values=list(cur.keys()))#создаем комбобокс для выбора пользователем валюты со значением(values)=cur-словарю валют,
 # переведенному в список-list с ключами-keys
 t_combobox.pack(padx=10, pady=10)
-t_combobox.bind("<<ComboboxSelected>>", update_c_label)#каждый раз обновляем метку с названием валюты
+t_combobox.bind("<<ComboboxSelected>>", update_t_label)#каждый раз обновляем метку с названием валюты
 
-c_label = ttk.Label()#создаем метку для вывода названия валют полностью
-c_label.pack(padx=10, pady=10)
+t_label = ttk.Label()#создаем метку для вывода названия валют полностью
+t_label.pack(padx=10, pady=10)
 
 Button(text="Получить курс обмена", command=exchange).pack(padx=10, pady=10)
 #создаем кнопку с командой обмен-exchange с параметрами
